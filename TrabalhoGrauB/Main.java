@@ -19,7 +19,11 @@ public class Main {
     }
 
     public static void carregarFila() {
-        
+        // fazer um if do tipo pra cada linha que ler do arquivo
+        // vao ser 4 ifs, pq sao 4 tipos de processo
+        // if (tipo == 1) {
+        //     Processo novoProcesso = new ComputingProcess(expressao);
+        // }
     }
 
     public static void main(String[] args) {
