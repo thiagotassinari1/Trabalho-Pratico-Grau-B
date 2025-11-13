@@ -26,6 +26,14 @@ public abstract class Processo {
         this.pid = pid;
     }
 
+    public int getTipo() {
+        return this.tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
     // Métodos que todas as outras classes DEVEM ter:
     public abstract void execute();
 

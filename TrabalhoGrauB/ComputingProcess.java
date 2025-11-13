@@ -12,6 +12,14 @@ public class ComputingProcess extends Processo {
         this.expressao = expressao;
     }
 
+    public String getExpressao() {
+        return this.expressao;
+    }
+
+    public void setExpressao(String expressao) {
+        this.expressao = expressao;
+    }
+
     public double soma(double n1, double n2) {
         return n1 + n2;
     }
@@ -34,18 +42,18 @@ public class ComputingProcess extends Processo {
 
         double n1 = Double.parseDouble(expressaoDividida[0]);
         double n2 = Double.parseDouble(expressaoDividida[2]);
-        String operador = expressaoDividida[1];
+        char operador = expressaoDividida[1].charAt(0);
 
-        if (operador == "+") {
-            System.out.println("Soma: %.2f + %.2f = %.2f".formatted(n1, n2, soma(n1, n2)));
-        } else if (operador == "-") {
-            System.out.println("Subtração: %.2f - %.2f = %.2f".formatted(n1, n2, subtracao(n1, n2)));
-        } else if (operador == "*") {
-            System.out.println("Multiplicação: %.2f * %.2f = %.2f".formatted(n1, n2, multiplicacao(n1, n2)));
-        } else if (operador == "/") {
-            System.out.println("Divisão: %.2f / %.2f = %.2f".formatted(n1, n2, divisao(n1, n2)));
+        if (operador == '+') {
+            System.out.println("\nSoma: %.2f + %.2f = %.2f".formatted(n1, n2, soma(n1, n2)));
+        } else if (operador == '-') {
+            System.out.println("\nSubtração: %.2f - %.2f = %.2f".formatted(n1, n2, subtracao(n1, n2)));
+        } else if (operador == '*') {
+            System.out.println("\nMultiplicação: %.2f * %.2f = %.2f".formatted(n1, n2, multiplicacao(n1, n2)));
+        } else if (operador == '/') {
+            System.out.println("\nDivisão: %.2f / %.2f = %.2f".formatted(n1, n2, divisao(n1, n2)));
         } else {
-            System.out.println("Operação inválida");
+            System.out.println("\nOperação inválida");
         }
     }
 

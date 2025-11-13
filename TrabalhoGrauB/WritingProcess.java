@@ -10,10 +10,17 @@ public class WritingProcess extends Processo {
         this.expressao = expressao;
     }
 
-    // construtor sobrecarregado pra quando for criado o processo pela leitura do
-    // arquivo fila.txt
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
     public WritingProcess(int pid, int tipo, String expressao) {
         super(pid, tipo);
+        this.expressao = expressao;
+    }
+
+    public String getExpressao() {
+        return this.expressao;
+    }
+
+    public void setExpressao(String expressao) {
         this.expressao = expressao;
     }
 
@@ -29,7 +36,7 @@ public class WritingProcess extends Processo {
             buffer.write(linha);
             buffer.write("\n");
 
-            System.out.println("Expressões salvas com sucesso!");
+            System.out.println("\nExpressões salvas com sucesso!");
             buffer.close();
 
         } catch (IOException e) {

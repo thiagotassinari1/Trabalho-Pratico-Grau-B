@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ReadingProcess extends Processo {
+    private int pidMain;
     private ArrayList<Processo> filaProcessos;
 
     public ReadingProcess(int pid, ArrayList<Processo> filaProcessos) {
@@ -20,6 +21,23 @@ public class ReadingProcess extends Processo {
         this.filaProcessos = filaProcessos;
     }
 
+    public int getPidMain() {
+        return this.pidMain;
+    }
+
+    public void setPidMain(int pidMain) {
+        this.pidMain = pidMain;
+    }
+
+    public ArrayList<Processo> getFilaProcessos() {
+        return this.filaProcessos;
+    }
+
+    public void setFilaProcessos(ArrayList<Processo> filaProcessos) {
+        this.filaProcessos = filaProcessos;
+    }
+
+
     @Override
     public void execute() {
         try (FileReader reader = new FileReader("computation.txt");
@@ -30,13 +48,12 @@ public class ReadingProcess extends Processo {
                 String expressao = sc.next();
 
                 // Cria o ComputingProcess e adiciona na fila de processos
-                // ver como vou fazer isso, talvez salvar um pid no arquivo computation
-                // ou receber o pid como parametro nessa clase, tipo "pidMain", pra dai dar um pidMain++ e enviar no construtor do ComputingProcess
-                Processo novoProcesso = new ComputingProcess(expressao);
+                pidMain++;
+                Processo novoProcesso = new ComputingProcess(pidMain, expressao);
                 filaProcessos.add(novoProcesso);
 
             }
-            System.out.println("Computation.txt lido com sucesso!");
+            System.out.println("\nComputation.txt lido com sucesso!");
 
             // chama a função de limpar o arquivo logo quando termina de ler
             limparArquivo();
@@ -64,7 +81,7 @@ public class ReadingProcess extends Processo {
 
     @Override
     public void imprimeInfo(int pid) {
-        String infos = String.format("Pid: %d - Tipo: Reading Process | Fila de processos: %s", pid, filaProcessos);
+        String infos = String.format("Pid: %d - Tipo: Reading Process | Fila de processos", pid);
         System.out.println(infos);
     }
 }

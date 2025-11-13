@@ -1,4 +1,6 @@
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -71,18 +73,121 @@ public class Main {
 
     }
 
-    public static void executaProximo() {
+    public static void executaProximo(ArrayList<Processo> filaProcessos) {
+        if (filaProcessos.isEmpty()) {
+            System.out.println("\nLista vazia. Sem processos para executar.");
+            return;
+        }
+
+        if (filaProcessos.get(0) instanceof ReadingProcess) {
+            ReadingProcess processoReading = ((ReadingProcess) filaProcessos.get(0));
+
+            processoReading.setPidMain(pid);
+            processoReading.execute();
+            filaProcessos.remove(0);
+
+            // define de onde o main deve continuar a contagem do pid quando cria os
+            // computingProcess por dentro do ReadingProcess
+            pid = processoReading.getPidMain();
+            return;
+        } else {
+            filaProcessos.get(0).execute();
+            filaProcessos.remove(0);
+        }
 
     }
 
-    public static void executaEspecifico() {
+    public static void executaEspecifico(Scanner sc, ArrayList<Processo> filaProcessos) {
+        if (filaProcessos.isEmpty()) {
+            System.out.println("\nLista vazia. Sem processos para executar.");
+            return;
+        }
 
+        System.out.print("Informe o pid de um processo para executar: ");
+        int pidInformado = sc.nextInt();
+
+        for (int i = 0; i < filaProcessos.size(); i++) {
+            Processo processo = filaProcessos.get(i);
+
+            if (processo.getPid() == pidInformado) {
+                if (processo instanceof ReadingProcess) {
+                    ReadingProcess processoReading = ((ReadingProcess) filaProcessos.get(i));
+
+                    processoReading.setPidMain(pid);
+                    processoReading.execute();
+                    filaProcessos.remove(i);
+                    // define de onde o main deve continuar a contagem do pid quando cria os
+                    // computingProcess por dentro do ReadingProcess
+                    pid = processoReading.getPidMain();
+                    return;
+                } else {
+                    processo.execute();
+                    filaProcessos.remove(i);
+                    return;
+                }
+
+            }
+        }
+
+        // Padrão pra caso não caia no if do for
+        System.out.println("Nenhum processo com pid %d encontrado.".formatted(pidInformado));
     }
 
-    public static void salvarFila() {
+    public static void salvarFila(ArrayList<Processo> filaProcessos) {
         // printingProcess e readingProcess vai salvar só o pid e tipo, o atributo salva
-        // vazio
+        // vazio: " "
         // writing e computing salva pid, tipo e a expressao
+
+        if (filaProcessos.isEmpty()) {
+            System.out.println("\nLista vazia. Arquivo não salvo.");
+            return;
+        }
+
+        try {
+            Locale.setDefault(Locale.ENGLISH);
+            FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\TrabalhoGrauB\\fila.txt");
+            BufferedWriter buffer = new BufferedWriter(writer);
+            buffer.write("pid;tipo;atributos");
+            buffer.write("\n");
+
+            for (int i = 0; i < filaProcessos.size(); i++) {
+                Processo processo = filaProcessos.get(i);
+
+                String linha = "";
+
+                if (processo instanceof ComputingProcess) {
+                    linha = String.format(Locale.ENGLISH, "%d;%d;%s",
+                            processo.getPid(),
+                            processo.getTipo(),
+                            ((ComputingProcess) processo).getExpressao());
+                } else if (processo instanceof WritingProcess) {
+                    linha = String.format(Locale.ENGLISH, "%d;%d;%s",
+                            processo.getPid(),
+                            processo.getTipo(),
+                            ((WritingProcess) processo).getExpressao());
+                } else if (processo instanceof ReadingProcess) {
+                    linha = String.format(Locale.ENGLISH, "%d;%d;%s",
+                            processo.getPid(),
+                            processo.getTipo(),
+                            " ");
+                } else if (processo instanceof PrintingProcess) {
+                    linha = String.format(Locale.ENGLISH, "%d;%d;%s",
+                            processo.getPid(),
+                            processo.getTipo(),
+                            " ");
+                }
+
+                buffer.write(linha);
+                buffer.write("\n");
+            }
+
+            System.out.println("\nFila salva com sucesso!");
+            buffer.close();
+
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar a fila: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void carregarFila(ArrayList<Processo> filaProcessos) {
@@ -124,6 +229,7 @@ public class Main {
                 }
 
             }
+
             System.out.println("Fila.txt lido com sucesso!");
 
         } catch (IOException e) {
@@ -166,13 +272,13 @@ public class Main {
                     criarProcesso(sc, filaProcessos);
                     break;
                 case 2:
-
+                    executaProximo(filaProcessos);
                     break;
                 case 3:
-
+                    executaEspecifico(sc, filaProcessos);
                     break;
                 case 4:
-                    salvarFila();
+                    salvarFila(filaProcessos);
                     break;
                 case 5:
 

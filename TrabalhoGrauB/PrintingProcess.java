@@ -23,19 +23,14 @@ public class PrintingProcess extends Processo {
         }
 
         for (int i = 0; i < filaProcessos.size(); i++) {
-            // chama o imprimeInfo passando o pid que pega la do método da classe mãe
-            // não precisa de instaceOf pq o método imprimeInfo é herdado da classe
-            // abastrata Processo
-            // se fosse acessar um método específico que só tem em uma classe específica
-            // (não tem na classe mãe) precisaria do instaceOf
-            filaProcessos.get(i).imprimeInfo(getPid());
+            filaProcessos.get(i).imprimeInfo(filaProcessos.get(i).getPid());
         }
 
     }
 
     @Override
     public void imprimeInfo(int pid) {
-        String infos = String.format("Pid: %d - Nome: Computing Process | Fila de processos:", pid, filaProcessos);
+        String infos = String.format("Pid: %d - Nome: Printing Process | Fila de processos", pid);
         System.out.println(infos);
     }
 }
