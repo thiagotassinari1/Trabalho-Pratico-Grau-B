@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class PrintingProcess extends Processo {
     private ArrayList<Processo> filaProcessos;
 
-    public PrintingProcess(ArrayList<Processo> filaProcessos) {
-        super(4);
+    public PrintingProcess(int pid, ArrayList<Processo> filaProcessos) {
+        super(pid, 4);
         this.filaProcessos = filaProcessos;
     }
 

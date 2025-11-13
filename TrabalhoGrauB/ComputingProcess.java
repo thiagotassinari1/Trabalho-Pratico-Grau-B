@@ -1,8 +1,8 @@
 public class ComputingProcess extends Processo {
     private String expressao;
 
-    public ComputingProcess(String expressao) {
-        super(1);
+    public ComputingProcess(int pid, String expressao) {
+        super(pid, 1);
         this.expressao = expressao;
     }
 

@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class ReadingProcess extends Processo {
     private ArrayList<Processo> filaProcessos;
 
-    public ReadingProcess(ArrayList<Processo> filaProcessos) {
-        super(3);
+    public ReadingProcess(int pid, ArrayList<Processo> filaProcessos) {
+        super(pid, 3);
         this.filaProcessos = filaProcessos;
     }
 
@@ -26,9 +26,12 @@ public class ReadingProcess extends Processo {
                 Scanner sc = new Scanner(reader).useLocale(Locale.ENGLISH).useDelimiter(";|\\n")) {
 
             while (sc.hasNext()) {
+
                 String expressao = sc.next();
 
                 // Cria o ComputingProcess e adiciona na fila de processos
+                // ver como vou fazer isso, talvez salvar um pid no arquivo computation
+                // ou receber o pid como parametro nessa clase, tipo "pidMain", pra dai dar um pidMain++ e enviar no construtor do ComputingProcess
                 Processo novoProcesso = new ComputingProcess(expressao);
                 filaProcessos.add(novoProcesso);
 
