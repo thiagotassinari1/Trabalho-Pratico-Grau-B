@@ -27,7 +27,7 @@ public class WritingProcess extends Processo {
     @Override
     public void execute() {
         try {
-            // append ativado(true) para não sobrescrever o que já tiver no arquivo;
+            // append ativado (true) para não sobrescrever o que já tiver no arquivo;
             FileWriter writer = new FileWriter("computation.txt", true);
             BufferedWriter buffer = new BufferedWriter(writer);
 

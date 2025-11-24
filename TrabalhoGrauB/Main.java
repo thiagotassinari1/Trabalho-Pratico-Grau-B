@@ -33,6 +33,8 @@ public class Main {
             System.out.print("Expressão: ");
             String expressao = sc.nextLine();
 
+            System.out.println("\nProcesso criado!");
+
             pid++;
             Processo novoProcesso = new WritingProcess(pid, expressao);
             filaProcessos.add(novoProcesso);
@@ -130,14 +132,10 @@ public class Main {
         }
 
         // Padrão pra caso não caia no if do for
-        System.out.println("Nenhum processo com pid %d encontrado.".formatted(pidInformado));
+        System.out.println("\nNenhum processo com pid %d encontrado.".formatted(pidInformado));
     }
 
     public static void salvarFila(ArrayList<Processo> filaProcessos) {
-        // printingProcess e readingProcess vai salvar só o pid e tipo, o atributo salva
-        // vazio: " "
-        // writing e computing salva pid, tipo e a expressao
-
         if (filaProcessos.isEmpty()) {
             System.out.println("\nLista vazia. Arquivo não salvo.");
             return;
@@ -145,7 +143,7 @@ public class Main {
 
         try {
             Locale.setDefault(Locale.ENGLISH);
-            FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\TrabalhoGrauB\\fila.txt");
+            FileWriter writer = new FileWriter("fila.txt");
             BufferedWriter buffer = new BufferedWriter(writer);
             buffer.write("pid;tipo;atributos");
             buffer.write("\n");
@@ -191,7 +189,7 @@ public class Main {
     }
 
     public static void carregarFila(ArrayList<Processo> filaProcessos) {
-        try (FileReader reader = new FileReader("C:\\Users\\User\\Desktop\\TrabalhoGrauB\\fila.txt");
+        try (FileReader reader = new FileReader("fila.txt");
                 Scanner sc = new Scanner(reader).useLocale(Locale.ENGLISH).useDelimiter(";|\\n")) {
 
             // pular linha do cabeçalho
@@ -202,10 +200,8 @@ public class Main {
                 int tipo = sc.nextInt();
                 String atributo = sc.next();
 
-                // Cria um novo processo com base no tipo do arquivo e adiciona na fila de
-                // processos
-                // define o pid estatico pro pid que leu no arquivo, pra sempre manter o pid
-                // atualizado com o ultimo pid do arquivo
+                // Cria um novo processo com base no tipo do arquivo e adiciona na fila de processos
+                // define o pid estatico pro pid que leu no arquivo, pra sempre manter o pid atualizado com o ultimo pid do arquivo
                 if (tipo == 1) {
                     Processo novoProcesso = new ComputingProcess(pidArquivo, tipo, atributo);
                     filaProcessos.add(novoProcesso);

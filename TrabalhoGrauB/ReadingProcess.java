@@ -15,8 +15,7 @@ public class ReadingProcess extends Processo {
         this.filaProcessos = filaProcessos;
     }
 
-    // construtor sobrecarregado pra quando for criado o processo pela leitura do
-    // arquivo fila.txt
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
     public ReadingProcess(int pid, int tipo, ArrayList<Processo> filaProcessos) {
         super(pid, tipo);
         this.filaProcessos = filaProcessos;
@@ -46,6 +45,8 @@ public class ReadingProcess extends Processo {
             while (sc.hasNext()) {
 
                 String expressao = sc.next();
+
+                System.out.println("\nProcesso criado!");
 
                 // Cria o ComputingProcess e adiciona na fila de processos
                 pidMain++;
