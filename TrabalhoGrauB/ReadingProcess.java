@@ -15,7 +15,8 @@ public class ReadingProcess extends Processo {
         this.filaProcessos = filaProcessos;
     }
 
-    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do
+    // arquivo fila.txt
     public ReadingProcess(int pid, int tipo, ArrayList<Processo> filaProcessos) {
         super(pid, tipo);
         this.filaProcessos = filaProcessos;
@@ -37,7 +38,6 @@ public class ReadingProcess extends Processo {
         this.filaProcessos = filaProcessos;
     }
 
-
     @Override
     public void execute() {
         try (FileReader reader = new FileReader("computation.txt");
@@ -51,6 +51,12 @@ public class ReadingProcess extends Processo {
                 pidMain++;
                 Processo novoProcesso = new ComputingProcess(pidMain, expressao);
                 filaProcessos.add(novoProcesso);
+
+                System.out.println("\n-------------------------");
+                System.out.println("Informações do processo: " + "\n" +
+                        "Pid: " + novoProcesso.getPid() + "\n" +
+                        "Tipo: Computing Process");
+                System.out.println("-------------------------");
 
             }
             System.out.println("\nComputation.txt lido com sucesso!");
